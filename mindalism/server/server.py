@@ -1,6 +1,6 @@
 # Import flask and datetime module for showing date and time
 from flask import Flask
-from .SpeechToText import speechtotext
+from SpeechToText import speechtotext
 import datetime
   
 x = datetime.datetime.now()
@@ -10,7 +10,7 @@ app = Flask(__name__)
   
   
 # Route for seeing a data
-@app.route('/')
+@app.route('/toTextJournal', methods=['GET'])
 def toTextJournal():
     return speechtotext.main()
       
