@@ -10,37 +10,30 @@ const CalendarPage = () => {
 
     const [selectedDay, setSelectedDay] = useState(null);
 
-    const dateSet = (e) => {
-        setSelectedDay(e);
-        console.log(selectedDay);
-        console.log(selectedDay != null && new Date(selectedDay.year, selectedDay.month, selectedDay.day));
-    }
-
     return(
         <div>
-            <Typography>
-                Calendar!
-            </Typography>
-                <Grid container spacing={4} sx={{pl: '2.5%', pt:'2.5%'}}>
-                    <Grid item xs={8}>
-                        <h1 className='text-center'>React Calendar with Range</h1>
+                <Grid container spacing={4} sx={{p: '2.5%'}}>
+                    <Grid item xs={4} sx={{p:'2.5%'}}>
+                        <Typography variant='h2' className='text-center'>Your Calendar</Typography>
                         <div className='calendar-container'>
                         <Calendar
                             value={selectedDay}
-                            onChange={e => dateSet(e)}
+                            onChange={setSelectedDay}
                             shouldHighlightWeekends
                         />
                         </div>
                     </Grid>
-                    <Grid item xs={4}>
-                        {
-                            <p className='text-center'>
-                            <span className='bold'>Selected date:</span>{' '}
+                    <Grid item xs={8} sx={{p: '2.5%'}}>
+                        <Card sx={{p: '2.5%'}}>
                             {
-                                selectedDay != null && new Date(selectedDay.year, selectedDay.month, selectedDay.day)
+                                <p className='text-center'>
+                                <span className='bold'>Selected date:</span>{' '}
+                                {
+                                    selectedDay != null && new Date(selectedDay.year, selectedDay.month, selectedDay.day).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+                                }
+                                </p>
                             }
-                            </p>
-                        }
+                        </Card>
                     </Grid>
                 </Grid>
         </div>
