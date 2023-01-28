@@ -1,0 +1,59 @@
+.typew {
+  color: #1976d2;
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
+.main-img {
+  background-size: "contain";
+  max-width: 80%;
+  margin-top: 10px;
+  max-height: 80%;
+}
+
+.main-text {
+  max-width: 100%;
+  height: auto;
+  justify-content: center;
+}
+
+.about-icon {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-title {
+  text-align: center;
+}
+
+.card-size {
+  min-height: 200px;
+  justify-content: center;
+}
+
+.icon-img {
+  background-size: "contain";
+  max-width: 20%;
+  margin-top: 10px;
+  max-height: 20%;
+}
+
+.home-div {
+  margin-top: 65px;
+}
+
+.button-size {
+  justify-content: center;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.navbar > .active {
+  border-bottom: 1px white;
+}
+
+.navbarr {
+  padding-bottom: 70px;
+}

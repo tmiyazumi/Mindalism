@@ -1,5 +1,9 @@
 // Importing modules
 import React, { useState, useEffect } from "react";
+import LandingPage from "./components/LandingPage";
+import ErrorPage from "./components/ErrorPage";
+import Navbar from "./components/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
   
 function App() {
@@ -30,17 +34,13 @@ function App() {
     }, []);
   
     return (
-        <div className="App">
-            <header className="App-header">
-                <h1>React and flask</h1>
-                {/* Calling a data from setdata for showing */}
-                <p>{data.name}</p>
-                <p>{data.age}</p>
-                <p>{data.date}</p>
-                <p>{data.programming}</p>
-  
-            </header>
-        </div>
+    <BrowserRouter>
+        <Navbar />
+        <Routes>
+            <Route path="/" exact element={<LandingPage />} />
+            <Route path="*" element={<ErrorPage />} />
+        </Routes>
+    </BrowserRouter>
     );
 }
   
