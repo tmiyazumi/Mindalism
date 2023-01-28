@@ -71,7 +71,7 @@
   --cl-color-black: #444444;
   --cl-color-disabled: #d4d4d4;
   --cl-color-error: #ff2929;
-  font-size: 10px;
+  font-size: 14px;
   background: #fff;
   box-shadow: 0 1em 4em rgba(0, 0, 0, 0.07);
   border-radius: 1em;
@@ -669,4 +669,24 @@
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+.unhappy1Day:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(178, 0, 0, 0.7) !important;
+}
+
+.unhappy2Day:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(209, 105, 0, 0.7) !important;
+}
+
+.neutralDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(231, 208, 0, 0.7) !important;
+}
+
+.happy1Day:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(30, 151, 0, 0.7) !important;
+}
+
+.happy2Day:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(27, 200, 0, 0.7) !important;
 }
