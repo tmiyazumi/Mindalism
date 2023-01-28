@@ -1,2 +1,2 @@
-# TAJJ
+# Mindalism
 Swamphacks
