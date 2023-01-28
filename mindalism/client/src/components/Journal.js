@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { Typography, Grid, Card, CardMedia, CardContent, CardActionArea, Dialog, DialogTitle, Popover, Paper, CardActions } from "@mui/material";
+import { Typography, Grid, Button, Card, CardMedia, CardContent, CardActionArea, Dialog, DialogTitle, Popover, Paper, CardActions } from "@mui/material";
 
 
 const record = (e) => {
@@ -9,10 +9,6 @@ const record = (e) => {
             'Access-Control-Allow-Origin': 'http://localhost:5000',
           })
           .then((response) => {
-              console.log(response);
-              setArtSongTable(response.data.body.tracks);
-              setAnchorEl(popOneRef.current);
-              console.log(anchorEl)
           })
 }
 
