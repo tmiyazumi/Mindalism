@@ -1,5 +1,7 @@
 firebase_admin_cred.json
 
+key.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

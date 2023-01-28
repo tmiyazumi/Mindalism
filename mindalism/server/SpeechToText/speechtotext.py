@@ -8,11 +8,27 @@ from google.cloud import speech
 import pyaudio
 from six.moves import queue
 
+import os
+import openai
+from datetime import datetime
+from datetime import date
+import json
+
+import pandas as pd 
+
+import nltk
+nltk.downloader.download('vader_lexicon')
+
+from nltk.sentiment import SentimentIntensityAnalyzer
+from tqdm.notebook import tqdm
+import requests
+
+
 # Audio recording parameters
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
-file = open('./TAJJ/textfile.txt', 'w')
+file = open('textfile.txt', 'w')
 
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
@@ -138,6 +154,88 @@ def listen_print_loop(responses):
             num_chars_printed = 0
 
 
+def datacompliation():
+    file.close()
+    # Date
+    _date = datetime.utcnow().isoformat()
+
+    # Entry
+    with open('textfile.txt') as infile:
+        contents = infile.read()
+        entry = contents
+        print(contents)
+    os.remove('textfile.txt')
+
+    # Summary
+    ## OpenAI API Key
+    openai.api_key = "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"
+
+    ## Prompt
+    prompt = "Summarize this journal entry for the reader and focus on any highlights or feelings that the writer was writing: "
+    prompt += entry
+
+    ## Response
+    response = openai.Completion.create(model="text-davinci-003", prompt=prompt, temperature=0.3, max_tokens=1000)
+    summary = response["choices"][0]["text"]
+    summary = summary.replace("\n", "")
+
+    # Analytics
+    sia = SentimentIntensityAnalyzer()
+    polarityScore = sia.polarity_scores(entry)
+    print(polarityScore)
+
+    url = "https://api.apilayer.com/text_to_emotion"
+
+    payload = entry.encode("utf-8")
+    headers= {
+    "apikey": "ERsB7UqlREzU96zI1IL3rhm5gzJ2g3Mf"
+    }
+
+    response = requests.request("POST", url, headers=headers, data = payload)
+
+    status_code = response.status_code
+    emotionResult = response.text
+
+    emotionResult = emotionResult.replace("\n", "")
+    emotionResult = emotionResult.replace(" ", "")
+    emotionResult = emotionResult.replace("\"", "")
+
+    emotionResultF = {sub.split(":")[0]: sub.split(":")[1] for sub in emotionResult[1:-1].split(",")}
+
+    # change the value of dict to float
+    for key, value in emotionResultF.items():
+        emotionResultF[key] = float(value)
+    
+    emotionResult = emotionResultF
+
+    # polarityScore = polarityScore.replace("\n", "")
+    # emotionResult = emotionResult.replace("\n", "")
+
+    analytics = {
+        "polarityScore": polarityScore,
+        "emotionResult": emotionResult
+    }
+
+
+
+
+    # Json Dictionary
+    data = {
+        "date": _date,
+        "entry": entry,
+        "summary": summary,
+        "analytics": analytics
+    }
+
+    # Json File
+    today = date.today()
+    filename =  "JSON/" + today.strftime("%Y-%m-%d") + ".json"
+    json_data = json.dumps(data)
+    with open(filename, "w") as outfile:
+        outfile.write(json_data)
+
+    print(data)
+
 def main():
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages.
@@ -165,6 +263,7 @@ def main():
 
         # Now, put the transcription responses to use.
         listen_print_loop(responses)
+        datacompliation()
 
 if __name__ == "__main__":
     main()
