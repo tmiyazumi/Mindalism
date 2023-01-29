@@ -2,10 +2,13 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { Typography, Box, Grid, Button, Card, CardContent, LinearProgress, Stack } from "@mui/material";
 import Typewriter from "typewriter-effect";
-import data from '../2023-01-29.json';
+import data from '../journals.json';
+
+const today = data.dates['2023-01-29'];
 
 export const JournalArea = ({loading, text, record}) => {
     if (loading == false && !text) {
+        console.log(today[Object.keys(today).length-2]);
         return (
             <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '25px'}}>
                 <Button variant="contained" onClick={() => record()}>Record Entry</Button>
@@ -39,7 +42,7 @@ export const JournalArea = ({loading, text, record}) => {
     } 
 };
 
-const Journal = () => {
+const JournalRecord = () => {
 
     const [recLoad, setRecLoad] = useState(false);
     const [recText, setRecText] = useState(null);
@@ -51,14 +54,10 @@ const Journal = () => {
             })
             .then((response) => {
                 console.log(response)
-                setRecText(data.entry);
+                setRecText(today[Object.keys(today).length-2].entry);
                 setRecLoad(false);
             })
-    }
-
-    // useEffect(() => {
-
-    // }, [recLoad, recText])    
+    }  
 
     return(
         <div>
@@ -78,4 +77,4 @@ const Journal = () => {
     );
 };
 
-export default Journal;
+export default JournalRecord;

@@ -14,8 +14,6 @@ from datetime import datetime
 from datetime import date
 import json
 
-import pandas as pd 
-
 import nltk
 nltk.downloader.download('vader_lexicon')
 
@@ -23,13 +21,14 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from tqdm.notebook import tqdm
 import requests
 
-# API Keys
-f = open("api.json")
-data = json.load(f)
-emotion_key = data["emotion"]
-openai_key= data["openai"]
-f.close()
+openai_key= "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"
 
+# API Keys
+f = open('api.json')
+var = json.load(f)
+openai_key = var['openai']
+emotion_key = var['emotion']
+f.close()
 
 # Audio recording parameters
 RATE = 16000
@@ -153,7 +152,7 @@ def listen_print_loop(responses):
             # one of our keywords.
             if re.search(r"\b(exit journal entry|quit)\b", transcript, re.I):
                 print("Exiting..")
-                return "Done!"
+                break
 
             num_chars_printed = 0
 
@@ -171,76 +170,101 @@ def datacompliation():
     # os.remove('textfile.txt')
 
     # Summary
-    ## OpenAI API Key
     openai.api_key = openai_key
 
-    ## Prompt
-    prompt = "Summarize this journal entry for the reader and focus on any highlights or feelings that the writer was writing: "
-    prompt += entry
-
-    ## Response
-    response = openai.Completion.create(model="text-davinci-003", prompt=prompt, temperature=0.3, max_tokens=1000)
-    summary = response["choices"][0]["text"]
-    summary = summary.replace("\n", "")
-
-    # Analytics
     sia = SentimentIntensityAnalyzer()
     polarityScore = sia.polarity_scores(entry)
-    print(polarityScore)
 
-    url = "https://api.apilayer.com/text_to_emotion"
 
-    payload = entry.encode("utf-8")
+    emotion_prompt = "Classify the emotion in this post:"
+    emotion_prompt += entry
+    emotionResult = openai.Completion.create(
+        model="text-davinci-003",
+        prompt= emotion_prompt,
+        temperature=0,
+        max_tokens=30,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0
+    )
+    emotionResult = emotionResult["choices"][0]["text"].replace("\n", "")
 
-    headers= {
-    "apikey": emotion_key
-    }
-
-    response = requests.request("POST", url, headers=headers, data = payload)
-
-    status_code = response.status_code
-    emotionResult = response.text
-
-    emotionResult = emotionResult.replace("\n", "")
-    emotionResult = emotionResult.replace(" ", "")
-    emotionResult = emotionResult.replace("\"", "")
-
-    emotionResultF = {sub.split(":")[0]: sub.split(":")[1] for sub in emotionResult[1:-1].split(",")}
-
-    # change the value of dict to float
-    for key, value in emotionResultF.items():
-        emotionResultF[key] = float(value)
-    
-    emotionResult = emotionResultF
-
-    # polarityScore = polarityScore.replace("\n", "")
-    # emotionResult = emotionResult.replace("\n", "")
+    response = openai.Image.create(
+    prompt=emotionResult,
+    n=1,
+    size="1024x1024"
+    )
+    image_url = response['data'][0]['url']
 
     analytics = {
         "polarityScore": polarityScore,
-        "emotionResult": emotionResult
+        "emotionResult": emotionResult,
+        "image": image_url
     }
 
-    # Json Dictionary
-    data = {
-        "date": _date,
-        "entry": entry,
-        "summary": summary,
-        "analytics": analytics
-    }
+    date_to_append = datetime.now().strftime("%Y-%m-%d")
+    time_to_append = datetime.now().strftime("%H:%M:%S")
 
-    # Json File
-    today = date.today()
-    filename2 = "../client/src/" + today.strftime("%Y-%m-%d") + ".json"
-    filename =  "SpeechToText/JSON/" + today.strftime("%Y-%m-%d") + ".json"
-    json_data = json.dumps(data)
-    with open(filename, "w") as outfile:
-        outfile.write(json_data)
+    f = open('SpeechToText/JSON/journals.json')
+    existing_data = json.load(f)
 
-    with open(filename2, "w") as outfile:
-        outfile.write(json_data)
-        
-    print(data)
+    prompt = "Summarize this journal entry for the reader and focus on any highlights or feelings that the writer was writing about for that day: "
+    entry = entry.replace("Quit", "")
+    entry = entry.replace("quit", "")
+    
+    if date_to_append in existing_data["dates"]:
+        count = 0
+        for time in existing_data["dates"][date_to_append].items():
+            if time != "summary":
+                count+=1
+
+        count = count-1
+        prompt += str(existing_data["dates"][date_to_append]["summary"]) + entry
+        response = openai.Completion.create(model="text-davinci-003", prompt=prompt, temperature=0.3, max_tokens=1000)
+        complete_summary = response["choices"][0]["text"]
+        complete_summary = complete_summary.replace("\n", "")
+
+        existing_data["dates"][date_to_append].update({"summary": complete_summary})
+
+        data = {
+            count : {
+                "entry": entry,
+                "analytics": analytics
+            } 
+        }
+        existing_data["dates"][date_to_append].update(data)
+
+        with open('SpeechToText/JSON/journals.json', 'w') as f:
+            json.dump(existing_data, f)
+        with open('../client/src/journals.json', 'w') as f:
+            json.dump(existing_data, f)
+    else:
+        prompt += entry
+
+        response = openai.Completion.create(model="text-davinci-003", prompt=prompt, temperature=0.3, max_tokens=1000)
+        complete_summary = response["choices"][0]["text"]
+        complete_summary = complete_summary.replace("\n", "")
+
+        data = {
+            date_to_append : {
+                "summary": complete_summary,
+                0 : {
+                    "entry": entry,
+                    "analytics": analytics
+                },
+            }, 
+        }
+        existing_data["dates"].update(data)
+        filename = 'SpeechToText/JSON/journals.json'
+        filename2 = '../client/src/journals.json'
+        json_data=json.dumps(data)
+        with open(filename, "w") as outfile:
+            outfile.write(json_data)
+
+        with open(filename2, "w") as outfile:
+            outfile.write(json_data)
+    f.close()
+    print(existing_data)
 
 def main():
     # See http://g.co/cloud/speech/docs/languages
@@ -274,4 +298,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-#file.close()
+# file.close()

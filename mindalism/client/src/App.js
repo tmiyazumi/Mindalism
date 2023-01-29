@@ -5,7 +5,7 @@ import ErrorPage from "./components/ErrorPage";
 import Navbar from "./components/Navbar";
 import CalendarPage from "./components/Calendar";
 import Analytics from "./components/Analytics";
-import Journal from "./components/Journal";
+import JournalRecord from "./components/JournalRecord";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
   
@@ -16,7 +16,6 @@ function App() {
         <Routes>
             <Route path="/" exact element={<LandingPage />} />
             <Route path="/calendar" exact element={<CalendarPage/>} />
-            <Route path="/journal" exact element={<Journal/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     </BrowserRouter>

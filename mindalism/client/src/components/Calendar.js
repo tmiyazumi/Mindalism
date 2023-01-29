@@ -3,7 +3,7 @@ import axios from "axios";
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import {Calendar} from 'react-modern-calendar-datepicker';
 import { Typography, Grid, Card, CardMedia, CardContent, CardActionArea, Dialog, DialogTitle, Popover, Paper, CardActions } from "@mui/material";
-import Journal from "./Journal";
+import JournalRecord from "./JournalRecord";
 
 import '../styles/DatePicker.css';
 
@@ -19,7 +19,7 @@ const CalendarPage = () => {
 
     return(
         <div>
-            <Card sx={{px: '2.5%', mx: '5%', mt: '2.5%', mb: '1%'}}>
+            <Card sx={{px: '2.5%', py: '1.5%', mx: '5%', mt: '2.5%', mb: '1%'}}>
                 {
                     <Typography display='flex' alignItems="center" justifyContent='center' variant='h4'>
                     {
@@ -44,7 +44,7 @@ const CalendarPage = () => {
                     </Card>
                 </Grid>
                 <Grid item xs={8} sx={{p: '1%'}}>
-                    <Journal />
+                    <JournalRecord />
                 </Grid>
             </Grid>
         </div>
