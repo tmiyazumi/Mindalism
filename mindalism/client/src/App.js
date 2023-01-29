@@ -17,7 +17,6 @@ function App() {
             <Route path="/" exact element={<LandingPage />} />
             <Route path="/calendar" exact element={<CalendarPage/>} />
             <Route path="/journal" exact element={<Journal/>} />
-            <Route path="/analytics" exact element={<Analytics/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     </BrowserRouter>

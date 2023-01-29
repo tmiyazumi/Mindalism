@@ -153,7 +153,7 @@ def listen_print_loop(responses):
             # one of our keywords.
             if re.search(r"\b(exit journal entry|quit)\b", transcript, re.I):
                 print("Exiting..")
-                break
+                return "Done!"
 
             num_chars_printed = 0
 
@@ -168,7 +168,7 @@ def datacompliation():
         contents = infile.read()
         entry = contents
         print(contents)
-    os.remove('textfile.txt')
+    # os.remove('textfile.txt')
 
     # Summary
     ## OpenAI API Key
@@ -231,11 +231,15 @@ def datacompliation():
 
     # Json File
     today = date.today()
-    filename =  "JSON/" + today.strftime("%Y-%m-%d") + ".json"
+    filename2 = "../client/src/" + today.strftime("%Y-%m-%d") + ".json"
+    filename =  "SpeechToText/JSON/" + today.strftime("%Y-%m-%d") + ".json"
     json_data = json.dumps(data)
     with open(filename, "w") as outfile:
         outfile.write(json_data)
 
+    with open(filename2, "w") as outfile:
+        outfile.write(json_data)
+        
     print(data)
 
 def main():
@@ -269,4 +273,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-    file.close()
+
+#file.close()
