@@ -1,18 +1,15 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { Typography, Grid, Button } from "@mui/material";
+import { Typography, Box, Grid, Button, Card, CardContent } from "@mui/material";
+import data from '../2023-01-28.json';
 
 const Journal = () => {
 
-    const [currDate, setCurrDate] = useState(null);
-
-    useEffect(() => {
-        setCurrDate(new Date().toISOString().slice(0,9));
-    }, []);
+    const [recLoad, setRecLoad] = useState(false);
+    const [recText, setRecText] = useState(null);
 
     const record = (e) => {
         console.log("Requesting Speech To Text Script");
-        console.log(currDate);
         return axios.post("http://localhost:5000/toTextJournal", {
             })
             .then((response) => {
@@ -22,19 +19,17 @@ const Journal = () => {
 
     return(
         <div>
-            <Grid container spacing={4} sx={{p: '2.5%'}}>
-                <Grid item xs={4} sx={{p:'2.5%'}}>
-                    <Typography variant="h2">
+            <Card sx={{p: '2.5%'}}>
+                <CardContent >
+                    <Typography display='flex' alignItems="center" justifyContent='center' variant="h4">
                         Your Journal
                     </Typography>
-                </Grid>
-                <Grid item xs={4} sx={{p:'2.5%'}}>
-                    <Typography variant="h2">
-                        Journal Entry
-                    </Typography>
-                    <Button variant="contained" onClick={(e) => record(e)}>Contained</Button>
-                </Grid>
-            </Grid>
+                    
+                    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '25px'}}>
+                        <Button variant="contained" onClick={(e) => record(e)}>Record Entry</Button>
+                    </Box>
+                </CardContent>
+            </Card>
         </div>
     );
 };
