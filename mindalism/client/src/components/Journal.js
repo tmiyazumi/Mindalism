@@ -1,18 +1,25 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { Typography, Grid, Button, Card, CardMedia, CardContent, CardActionArea, Dialog, DialogTitle, Popover, Paper, CardActions } from "@mui/material";
-
-
-const record = (e) => {
-    console.log("Requesting Speech To Text Script");
-    return axios.post("http://localhost:5000/toTextJournal", {
-            'Access-Control-Allow-Origin': 'http://localhost:5000',
-          })
-          .then((response) => {
-          })
-}
+import { Typography, Grid, Button } from "@mui/material";
 
 const Journal = () => {
+
+    const [currDate, setCurrDate] = useState(null);
+
+    useEffect(() => {
+        setCurrDate(new Date().toISOString().slice(0,9));
+    }, []);
+
+    const record = (e) => {
+        console.log("Requesting Speech To Text Script");
+        console.log(currDate);
+        return axios.post("http://localhost:5000/toTextJournal", {
+            })
+            .then((response) => {
+                console.log(response)
+            })
+    }
+
     return(
         <div>
             <Grid container spacing={4} sx={{p: '2.5%'}}>
