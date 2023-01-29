@@ -22,7 +22,7 @@ from tqdm.notebook import tqdm
 import requests
 
 # API Keys
-f = open("api.json")
+f = open("Mindalism/mindalism/server/SpeechToText/api.json")
 data = json.load(f)
 emotion_key = data["emotion"]
 openai_key= data["openai"]
@@ -258,6 +258,7 @@ def datacompliation():
         }
     existing_data["dates"].update(data)
     # Json File
+
     filename2 = "../../client/src/journals.json"
     filename =  "JSON/journals.json"
     json_data = json.dumps(data)

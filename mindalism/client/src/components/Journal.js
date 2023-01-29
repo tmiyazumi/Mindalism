@@ -3,8 +3,8 @@ import axios from "axios";
 import "../styles/Journal.css";
 import { CalendarPage } from "./Calendar.js"
 import { Typography, Button, Grid, Card, CardMedia, CardContent, CardActionArea, Dialog, DialogTitle, Popover, Paper, CardActions } from "@mui/material";
-import Datas from './../journals.json'
 
+import Datas from './../journals.json'
 
 
 const record = (e) => {
@@ -25,8 +25,11 @@ const Journal = ({selectedDay}) => {
     arr.pop();
     return(
         <div>
-            <Grid container spacing={4} sx={{p: '2.5%'}} flexDirection="column">
-                <Grid className="journaltitle">
+        
+            {console.log(Datas)}
+            <Grid container spacing={4} sx={{p: '2.5%'}}>
+                <Grid item xs={4} sx={{p:'2.5%'}}>
+
                     <Typography variant="h2">
                         Your Journal
                     </Typography>
