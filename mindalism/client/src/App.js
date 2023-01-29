@@ -8,6 +8,7 @@ import Analytics from "./components/Analytics";
 import Journal from "./components/Journal";
 import Emotion from "./components/Emotion";
 import CalcAnalytics from "./components/calcAnalytics";
+import JournalRecord from "./components/JournalRecord";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
   
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" exact element={<LandingPage />} />
             <Route path="/calendar" exact element={<CalendarPage/>} />
             <Route path="/journal" exact element={<Journal/>} />
+            <Route path="/journalrecord" exact element={<JournalRecord/>} />
             <Route path="/analytics" exact element={<Analytics/>} />
             <Route path="/emotion" exact element={<Emotion/>} />
             <Route path="/calcAnalytics" exact element={<CalcAnalytics/>} />

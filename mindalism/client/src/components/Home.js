@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/LandingPage.css";
 import { Typography, Grid, Button } from "@mui/material";
 import Typewriter from "typewriter-effect";
+import CalendarPage from "./Calendar";
 import { Link as ScrollLink } from "react-scroll";
 
 const Home = () => {
@@ -45,15 +46,7 @@ const Home = () => {
                 }}
               />
             </div>
-            <ScrollLink
-              activeClass="active"
-              to="About Us"
-              spy={true}
-              smooth={true}
-              duration={500}
-            >
-              <Button variant="contained">Get Started</Button>
-            </ScrollLink>
+              <Button variant="contained" LinkComponent={<CalendarPage />}>Get Started</Button>
           </Typography>
         </Grid>
         <Grid item xs={12} md={7} container justifyContent="flex-end">

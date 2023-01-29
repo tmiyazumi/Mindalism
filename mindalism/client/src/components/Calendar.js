@@ -6,6 +6,8 @@ import { Typography, Grid, Card, CardMedia, CardContent, CardActionArea, Dialog,
 import Journal from "./Journal";
 import Analytics from "./Analytics";
 import Emotion from "./Emotion";
+import JournalRecord from "./JournalRecord";
+
 import '../styles/DatePicker.css';
 
 const CalendarPage = () => {
@@ -47,6 +49,7 @@ const CalendarPage = () => {
                     </Card>
                 </Grid>
                 <Grid item xs={8} sx={{p: '1%'}}>
+                    <JournalRecord />
                     <Journal />
                 </Grid>
                 <Grid item xs={6} sx={{p: '1%'}}>

@@ -14,8 +14,6 @@ from datetime import datetime
 from datetime import date
 import json
 
-import pandas as pd 
-
 import nltk
 nltk.downloader.download('vader_lexicon')
 
@@ -30,6 +28,12 @@ emotion_key = data["emotion"]
 openai_key= data["openai"]
 f.close()
 
+# API Keys
+f = open("api.json")
+data = json.load(f)
+emotion_key = data["emotion"]
+openai_key= data["openai"]
+f.close()
 
 # Audio recording parameters
 RATE = 16000
@@ -168,7 +172,7 @@ def datacompliation():
         contents = infile.read()
         entry = contents
         print(contents)
-    os.remove('textfile.txt')
+    # os.remove('textfile.txt')
 
     # Summary
     openai.api_key = openai_key
@@ -225,7 +229,6 @@ def datacompliation():
         complete_summary = response["choices"][0]["text"]
         complete_summary = complete_summary.replace("\n", "")
 
-        existing_data["dates"][date_to_append].update({"summary": complete_summary})
 
         data = {
             count : {
@@ -298,4 +301,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-file.close()
+# file.close()
