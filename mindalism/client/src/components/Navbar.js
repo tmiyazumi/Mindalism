@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 const pages = new Map([
   ["journal", "Journal "],
   ["calendar", "Calendar "],
-  ["analytics", "Analytics "],
 ]);
 
 const Navbar = () => {

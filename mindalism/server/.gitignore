@@ -1,6 +1,9 @@
 firebase_admin_cred.json
 api.json
 key.json
+Scripts/
+textfile.txt
+pyvenv.cfg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
