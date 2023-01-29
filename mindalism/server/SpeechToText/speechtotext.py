@@ -21,13 +21,18 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from tqdm.notebook import tqdm
 import requests
 
-openai_key= "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"
+# API Keys
+f = open("api.json")
+data = json.load(f)
+emotion_key = data["emotion"]
+openai_key= data["openai"]
+f.close()
 
 # API Keys
-f = open('api.json')
-var = json.load(f)
-openai_key = var['openai']
-emotion_key = var['emotion']
+f = open("api.json")
+data = json.load(f)
+emotion_key = data["emotion"]
+openai_key= data["openai"]
 f.close()
 
 # Audio recording parameters
@@ -205,7 +210,7 @@ def datacompliation():
     date_to_append = datetime.now().strftime("%Y-%m-%d")
     time_to_append = datetime.now().strftime("%H:%M:%S")
 
-    f = open('SpeechToText/JSON/journals.json')
+    f = open('JSON/journals.json')
     existing_data = json.load(f)
 
     prompt = "Summarize this journal entry for the reader and focus on any highlights or feelings that the writer was writing about for that day: "
@@ -224,7 +229,6 @@ def datacompliation():
         complete_summary = response["choices"][0]["text"]
         complete_summary = complete_summary.replace("\n", "")
 
-        existing_data["dates"][date_to_append].update({"summary": complete_summary})
 
         data = {
             count : {
@@ -234,9 +238,7 @@ def datacompliation():
         }
         existing_data["dates"][date_to_append].update(data)
 
-        with open('SpeechToText/JSON/journals.json', 'w') as f:
-            json.dump(existing_data, f)
-        with open('../client/src/journals.json', 'w') as f:
+        with open('JSON/journals.json', 'w') as f:
             json.dump(existing_data, f)
     else:
         prompt += entry
@@ -254,17 +256,18 @@ def datacompliation():
                 },
             }, 
         }
-        existing_data["dates"].update(data)
-        filename = 'SpeechToText/JSON/journals.json'
-        filename2 = '../client/src/journals.json'
-        json_data=json.dumps(data)
-        with open(filename, "w") as outfile:
-            outfile.write(json_data)
+    existing_data["dates"].update(data)
+    # Json File
+    filename2 = "../../client/src/journals.json"
+    filename =  "JSON/journals.json"
+    json_data = json.dumps(data)
+    with open(filename, "w") as outfile:
+        outfile.write(json_data)
 
-        with open(filename2, "w") as outfile:
-            outfile.write(json_data)
-    f.close()
-    print(existing_data)
+    with open(filename2, "w") as outfile:
+        outfile.write(json_data)
+        
+    print(data)
 
 def main():
     # See http://g.co/cloud/speech/docs/languages

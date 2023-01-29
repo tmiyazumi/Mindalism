@@ -3,6 +3,9 @@ import axios from "axios";
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import {Calendar} from 'react-modern-calendar-datepicker';
 import { Typography, Grid, Card, CardMedia, CardContent, CardActionArea, Dialog, DialogTitle, Popover, Paper, CardActions } from "@mui/material";
+import Journal from "./Journal";
+import Analytics from "./Analytics";
+import Emotion from "./Emotion";
 import JournalRecord from "./JournalRecord";
 
 import '../styles/DatePicker.css';
@@ -19,13 +22,15 @@ const CalendarPage = () => {
 
     return(
         <div>
-            <Card sx={{px: '2.5%', py: '1.5%', mx: '5%', mt: '2.5%', mb: '1%'}}>
+            <Card sx={{px: '2.5%', mx: '5%', mt: '2.5%', mb: '1%'}}>
                 {
+                    <p className='text-center'>
                     <Typography display='flex' alignItems="center" justifyContent='center' variant='h4'>
                     {
                         selectedDay != null && new Date(selectedDay.year, selectedDay.month, selectedDay.day).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
                     }
                     </Typography>
+                    </p>
                 }
             </Card>
             <Grid container spacing={3} sx={{p: '2%'}}>
@@ -45,6 +50,13 @@ const CalendarPage = () => {
                 </Grid>
                 <Grid item xs={8} sx={{p: '1%'}}>
                     <JournalRecord />
+                    <Journal />
+                </Grid>
+                <Grid item xs={6} sx={{p: '1%'}}>
+                    <Analytics />
+                </Grid>
+                <Grid item xs={6} sx={{p: '1%'}}>
+                    <Emotion />
                 </Grid>
             </Grid>
         </div>
