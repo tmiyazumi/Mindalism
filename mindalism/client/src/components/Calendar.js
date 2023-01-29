@@ -3,6 +3,7 @@ import axios from "axios";
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import {Calendar} from 'react-modern-calendar-datepicker';
 import { Typography, Grid, Card, CardMedia, CardContent, CardActionArea, Dialog, DialogTitle, Popover, Paper, CardActions } from "@mui/material";
+import Journal from "./Journal";
 
 import '../styles/DatePicker.css';
 
@@ -12,9 +13,21 @@ const CalendarPage = () => {
 
     return(
         <div>
-                <Grid container spacing={4} sx={{p: '2.5%'}}>
-                    <Grid item xs={4} sx={{p:'2.5%'}}>
-                        <Typography variant='h2' className='text-center'>Your Calendar</Typography>
+            <Card sx={{px: '2.5%', mw: '5%', mv: '2.5%'}}>
+                {
+                    <p className='text-center'>
+                    <Typography variant='h4'>
+                    {
+                        selectedDay != null && new Date(selectedDay.year, selectedDay.month, selectedDay.day).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+                    }
+                    </Typography>
+                    </p>
+                }
+            </Card>
+            <Grid container spacing={4} sx={{p: '2%'}}>
+                <Grid item xs={4} sx={{p:'1%'}}>
+                    <Card>
+                        <Typography variant='h4' className='text-center'>Your Calendar</Typography>
                         <div className='calendar-container'>
                         <Calendar
                             value={selectedDay}
@@ -22,20 +35,12 @@ const CalendarPage = () => {
                             shouldHighlightWeekends
                         />
                         </div>
-                    </Grid>
-                    <Grid item xs={8} sx={{p: '2.5%'}}>
-                        <Card sx={{p: '2.5%'}}>
-                            {
-                                <p className='text-center'>
-                                <span className='bold'>Selected date:</span>{' '}
-                                {
-                                    selectedDay != null && new Date(selectedDay.year, selectedDay.month, selectedDay.day).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-                                }
-                                </p>
-                            }
-                        </Card>
-                    </Grid>
+                    </Card>
                 </Grid>
+                <Grid item xs={8} sx={{p: '1%'}}>
+                    <Journal />
+                </Grid>
+            </Grid>
         </div>
     );
 };
