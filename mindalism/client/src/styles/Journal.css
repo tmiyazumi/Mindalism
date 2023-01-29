@@ -1,0 +1,40 @@
+.rectangle {
+    display: inline-block;
+    width: 680px;
+    height: 300px;
+    background: #fff8dc;
+    margin: auto;
+    border-radius: 3%;
+    padding-left: 0.7%;
+    padding-right: 1.5%;
+    padding-top: 1%;
+    padding-bottom: 1.5%;
+    overflow: scroll;
+  }
+
+.journaltitle {
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.summary {
+    text-align: center;
+}
+
+.rectangle2 {
+    display: inline-block;
+    width: 680px;
+    height: 100px;
+    background: #fff8dc;
+    margin: auto;
+    border-radius: 3%;
+    padding-left: 1.7%;
+    padding-right: 1.5%;
+    padding-top: 1%;
+    padding-bottom: 1.5%;
+    overflow: scroll;
+  }
+
+li {
+    margin-bottom: 7px;
+}
