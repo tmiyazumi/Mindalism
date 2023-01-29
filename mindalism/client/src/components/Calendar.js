@@ -21,13 +21,11 @@ const CalendarPage = () => {
         <div>
             <Card sx={{px: '2.5%', mx: '5%', mt: '2.5%', mb: '1%'}}>
                 {
-                    <p className='text-center'>
                     <Typography display='flex' alignItems="center" justifyContent='center' variant='h4'>
                     {
                         selectedDay != null && new Date(selectedDay.year, selectedDay.month, selectedDay.day).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
                     }
                     </Typography>
-                    </p>
                 }
             </Card>
             <Grid container spacing={3} sx={{p: '2%'}}>
