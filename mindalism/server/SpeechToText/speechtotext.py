@@ -23,6 +23,13 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from tqdm.notebook import tqdm
 import requests
 
+# API Keys
+f = open("Mindalism/mindalism/server/SpeechToText/api.json")
+data = json.load(f)
+emotion_key = data["emotion"]
+openai_key= data["openai"]
+f.close()
+
 
 # Audio recording parameters
 RATE = 16000
@@ -100,14 +107,11 @@ class MicrophoneStream(object):
 
 def listen_print_loop(responses):
     """Iterates through server responses and prints them.
-
     The responses passed is a generator that will block until a response
     is provided by the server.
-
     Each response may contain multiple results, and each result may contain
     multiple alternatives; for details, see https://goo.gl/tjCPAU.  Here we
     print only the transcription for the top alternative of the top result.
-
     In this case, responses are provided for interim results as well. If the
     response is an interim one, print a line feed at the end of it, to allow
     the next result to overwrite it, until the response is a final one. For the
@@ -168,7 +172,7 @@ def datacompliation():
 
     # Summary
     ## OpenAI API Key
-    openai.api_key = "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"
+    openai.api_key = openai_key
 
     ## Prompt
     prompt = "Summarize this journal entry for the reader and focus on any highlights or feelings that the writer was writing: "
@@ -187,8 +191,9 @@ def datacompliation():
     url = "https://api.apilayer.com/text_to_emotion"
 
     payload = entry.encode("utf-8")
+
     headers= {
-    "apikey": "ERsB7UqlREzU96zI1IL3rhm5gzJ2g3Mf"
+    "apikey": emotion_key
     }
 
     response = requests.request("POST", url, headers=headers, data = payload)
@@ -216,9 +221,6 @@ def datacompliation():
         "emotionResult": emotionResult
     }
 
-
-
-
     # Json Dictionary
     data = {
         "date": _date,
@@ -229,11 +231,15 @@ def datacompliation():
 
     # Json File
     today = date.today()
-    filename =  "JSON/" + today.strftime("%Y-%m-%d") + ".json"
+    filename2 = "Mindalism/mindalism/client/src/" + today.strftime("%Y-%m-%d") + ".json"
+    filename =  "Mindalism/mindalism/server/SpeechToText/JSON/" + today.strftime("%Y-%m-%d") + ".json"
     json_data = json.dumps(data)
     with open(filename, "w") as outfile:
         outfile.write(json_data)
 
+    with open(filename2, "w") as outfile:
+        outfile.write(json_data)
+        
     print(data)
 
 def main():
