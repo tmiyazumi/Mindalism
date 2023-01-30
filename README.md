@@ -8,8 +8,10 @@ This was a project created for [SwampHacks 2023](https://2023.swamphacks.com/) o
 - [Inspiration](#inspiration)
 - [What is Mindalism](#what-is-mindalism)
 - [How we built it](#how-we-built-it)
-- [Challeneges)(#challenges)
+- [Challenges](#challenges)
 - [Accomplishments](#accomplishments)
+- [Learnings](#what-we-learned)
+- [What's next for Mindalism](#whats-next-for-mindalism)
 
 ---
 
@@ -32,7 +34,7 @@ We sought to expand our boundaries by maximizing the usage of APIs. We encounter
 JSON formatting: 
 Organizing user information and journal entries across large time periods proved to be difficult.
 
-## Accomplishments that we're proud of
+## Accomplishments
 - Completing a fully functioning prototype of our idea to bring a modern edge to personal journaling.
 - Developing a necessary and impactful project that has the potential to make a difference by addressing real-world problems.
 - Working with innovative, trending technologies such as Open AI and GCP’s Speech-to-Text transcription.
@@ -40,5 +42,5 @@ Organizing user information and journal entries across large time periods proved
 ## What we learned
 We learned the importance of planning and task distribution amongst team members to maximize the time given. We also gained technical experience in languages like JavaScript and Python, learned more about frameworks like Flask and React, and gained exposure to Google Cloud, Speech-to-Text transcribing, Natural Language Toolkit, Open AI, and other APIs.
 
-## What's next for Mindalism
+## What's next for Mindalism?
 We initiated the steps to connect our project with Firebase, but ran out of time to completely initiate the setup so focusing on more efficient storage and user authentication would be utmost. Another step would be providing improved sentiment analysis and insights to enable users to be more informed about their experience, outlook, and mindset. Improving the UI for better ease and accessibility for users would be important, especially since we would want to put it on the App Store.
